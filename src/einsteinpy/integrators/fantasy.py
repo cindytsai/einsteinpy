@@ -5,6 +5,10 @@ import numpy as np
 from .utils import _Z, _flow_A, _flow_B, _flow_mixed
 
 
+class NumericalErrorExceedTolerance(Exception):
+    pass
+
+
 class GeodesicIntegrator:
     """
     Geodesic Integrator, based on [1]_.
@@ -36,6 +40,7 @@ class GeodesicIntegrator:
         order=2,
         omega=1.0,
         suppress_warnings=False,
+        exit_when_exceed_numerical_error=False,
     ):
         """
         Constructor
@@ -87,6 +92,9 @@ class GeodesicIntegrator:
             Warnings are shown for every step, where numerical errors
             exceed specified tolerance (controlled by ``rtol`` and ``atol``)
             Defaults to ``False``
+        exit_when_exceed_numerical_error : bool
+            Whether to exit when numerical errors exceed tolerance
+            Defaults to ``False``
 
         Raises
         ------
@@ -117,6 +125,7 @@ class GeodesicIntegrator:
         self.rtol = rtol
         self.atol = atol
         self.suppress_warnings = suppress_warnings
+        self.exit_when_exceed_numerical_error = exit_when_exceed_numerical_error
 
         self.step_num = 0
         self.res_list = [q0, p0, q0, p0]
@@ -288,5 +297,8 @@ class GeodesicIntegrator:
                     f"Numerical error has exceeded specified tolerance at step = {self.step_num}.",
                     RuntimeWarning,
                 )
+                if self.exit_when_exceed_numerical_error:
+                    raise NumericalErrorExceedTolerance(
+                        "Numerical error has exceeded specified tolerance on step = {self.step_num}.")
 
         self.results.append(self.res_list)
