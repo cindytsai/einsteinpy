@@ -333,7 +333,9 @@ class Nulllike(Geodesic):
             Warnings are shown for every step, where numerical errors
             exceed specified tolerance (controlled by ``rtol`` and ``atol``)
             Defaults to ``False``
-
+        exit_when_exceed_numerical_error : bool
+            Whether to exit when numerical errors exceed tolerance
+            Defaults to ``False``
         """
         super().__init__(
             metric=metric,
@@ -414,7 +416,9 @@ class Timelike(Geodesic):
             Warnings are shown for every step, where numerical errors
             exceed specified tolerance (controlled by ``rtol`` and ``atol``)
             Defaults to ``False``
-
+        exit_when_exceed_numerical_error : bool
+            Whether to exit when numerical errors exceed tolerance
+            Defaults to ``False``
         """
         super().__init__(
             metric=metric,
