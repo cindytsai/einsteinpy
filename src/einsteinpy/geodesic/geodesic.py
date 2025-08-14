@@ -239,7 +239,8 @@ class Geodesic:
                 finished_steps = i
         except NumericalErrorExceedTolerance:
             warnings.warn(
-                f"Integration exceed tolerance, take only step = 0 ~ {finished_steps}"
+                f"Integration exceed tolerance which triggers the early return"
+                f", take only step = 1 ~ {finished_steps + 1}"
                 f" (exit_when_exceed_numerical_error=True)",
                 RuntimeWarning,
             )
