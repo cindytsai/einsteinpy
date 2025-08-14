@@ -100,6 +100,9 @@ class GeodesicIntegrator:
         ------
         NotImplementedError
             If ``order`` is not in [2, 4, 6, 8]
+        NumericalErrorExceedTolerance
+            If numerical errors exceed specified tolerance (controlled by ``rtol`` and ``atol``) and
+            exit_when_exceed_numerical_error is set to ``True``
 
         """
         ORDERS = {
