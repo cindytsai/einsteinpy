@@ -281,7 +281,7 @@ class GeodesicIntegrator:
         self.step_num += 1
 
         # Stability check
-        if not self.suppress_warnings:
+        if not self.suppress_warnings or self.exit_when_exceed_numerical_error:
             g = self.metric
             g_prms = self.metric_params
 
@@ -296,10 +296,11 @@ class GeodesicIntegrator:
             if not np.allclose(
                 g(q1, *g_prms) @ p1 @ p1, const, rtol=self.rtol, atol=self.atol
             ):
-                warnings.warn(
-                    f"Numerical error has exceeded specified tolerance at step = {self.step_num}.",
-                    RuntimeWarning,
-                )
+                if not self.suppress_warnings:
+                    warnings.warn(
+                        f"Numerical error has exceeded specified tolerance at step = {self.step_num}.",
+                        RuntimeWarning,
+                    )
                 if self.exit_when_exceed_numerical_error:
                     raise NumericalErrorExceedTolerance(
                         "Numerical error has exceeded specified tolerance on step = {self.step_num}."
