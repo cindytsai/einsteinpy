@@ -206,7 +206,9 @@ class Geodesic:
         order = kwargs.get("order", 2)
         omega = kwargs.get("omega", 1.0)
         sw = kwargs.get("suppress_warnings", False)
-        exit_when_exceed_numerical_error = kwargs.get("exit_when_exceed_numerical_error", False)
+        exit_when_exceed_numerical_error = kwargs.get(
+            "exit_when_exceed_numerical_error", False
+        )
         steps = np.arange(N)
 
         geodint = GeodesicIntegrator(
@@ -222,7 +224,7 @@ class Geodesic:
             order=order,
             omega=omega,
             suppress_warnings=sw,
-            exit_when_exceed_numerical_error=exit_when_exceed_numerical_error
+            exit_when_exceed_numerical_error=exit_when_exceed_numerical_error,
         )
 
         try:
@@ -234,7 +236,7 @@ class Geodesic:
             warnings.warn(
                 f"Integration exceed tolerance, take only step = 0 ~ {finished_steps}"
                 f" (exit_when_exceed_numerical_error=True)",
-                RuntimeWarning
+                RuntimeWarning,
             )
 
         vecs = np.array(geodint.results, dtype=float)
@@ -258,9 +260,9 @@ class Geodesic:
 
             cart_results = np.vstack((t, x, y, z, pt, pr, pth, pph)).T
 
-            return steps[:finished_step+1], cart_results
+            return steps[: finished_step + 1], cart_results
 
-        return steps[:finished_step+1], results
+        return steps[: finished_step + 1], results
 
 
 class Nulllike(Geodesic):

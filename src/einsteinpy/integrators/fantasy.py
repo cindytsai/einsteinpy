@@ -299,6 +299,7 @@ class GeodesicIntegrator:
                 )
                 if self.exit_when_exceed_numerical_error:
                     raise NumericalErrorExceedTolerance(
-                        "Numerical error has exceeded specified tolerance on step = {self.step_num}.")
+                        "Numerical error has exceeded specified tolerance on step = {self.step_num}."
+                    )
 
         self.results.append(self.res_list)
